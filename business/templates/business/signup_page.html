@@ -1,0 +1,53 @@
+{% extends 'business/general_base.html' %}
+
+<style type="text/css">
+	.signup{
+		display: flex;
+		text-align: center;
+		background: #eee;
+		margin: 10px 20px ;
+	}
+</style>
+{% block content %}
+<style type="text/css">
+	.signup{
+		display: flex;
+		text-align: center;
+		align-items: center;
+		background: #eee;
+		margin-left: 100px;
+		width: 85%;
+		height: 100px;
+	}
+	.admin, .employee, .customer, .vendor{
+		text-transform: uppercase;
+		letter-spacing: 1px;
+		margin: 10px 50px;
+		color: white;
+		text-decoration: none;
+		font-size: 20px;
+		font-weight: 600;
+	}
+
+	
+</style>
+
+
+
+	<h1> Welcome to Sign Up Page !</h1>
+	<div class="signup">
+		<div class="admin">
+			<a href="admin-signup"> Admin </a>
+		</div>
+		<div class="employee">
+			<a href="employee-signup"> Employee </a>
+		</div>
+		<div class="customer">
+			<a href="customer-signup"> Customer </a>
+		</div>
+		<div class="vendor">
+			<a href=""> Vendor </a>
+		</div>
+
+	</div>
+{% endblock %}

@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css">
+	<title> My Business </title>
+</head>
+<style type="text/css">
+	*{
+		margin: 0;
+		padding: 0;
+		font-family: 'Poppins',sans-serif;
+	}
+	body{	
+		background: lightblue;
+	}
+	
+	.main_container{
+		background: deepskyblue;
+		text-align: center;
+		width: 100%;
+	}
+	nav{
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		background: #fff;
+		margin: 0px 5%;
+		
+	}
+	.nav_left, .nav_right{
+		display: flex;
+		align-items: center;
+
+	}
+	.logo{
+		padding: 5px 5px;
+		margin-right: 5px;
+	}
+	i{
+		color: blue;
+	}
+	.logo_title{
+		font-size: 22px;
+		font-weight: blod;
+		margin-left: 5px;
+		margin-right: 20px;
+		text-transform: uppercase;
+		letter-spacing: 1px;
+		width: 150px;
+	}
+	.logo_title span{
+		font-size: 12px;
+		font-weight: bold;
+		color: blue;
+		margin: 2px 1px;
+	}
+	.navbar{
+		margin: 5px 5px;
+	}
+	.navbar a{
+		text-decoration: none;
+		font-size: 20px;
+		font-weight: bold;
+		color: darkblue;
+		text-transform: uppercase;
+		letter-spacing: 1px;
+		margin: 0px 5px;
+		cursor: pointer;
+	}
+	.sign_info{
+		padding: 5px 5px;
+		margin-right: 5px;
+	}
+	
+	.sign_info a{
+		text-decoration: none;
+		color: blue;
+		font-size: 20px;
+		letter-spacing: 1px;
+		cursor: pointer;
+		margin-right: 5px;
+	}
+	.profile{
+		margin: 5px 5px;
+	}
+	.profile img{
+		width: 50px;
+		border-radius: 50%;
+	}
+	.name{
+		font-size: 12px;
+		font-weight: bold;
+		text-transform: uppercase;
+		letter-spacing: 1px;
+		margin-top: 2px;
+		text-align: center;
+	}
+	.search{
+		margin: 10px 10px;
+		width: 400px;
+		border-radius: 30px;
+		margin-right: 10px;
+		background: #efefef;
+		display: flex;
+		align-items: center;
+		text-align: center;
+		
+	}
+	.search i{
+		margin: 10px 5px;
+	}
+	.text{
+		width: 100%;
+		background: transparent;
+		padding: 10px;
+		outline: none;
+		border: 0;
+		font-size: 18px;
+		font-weight: 600;
+	}
+	.footer{
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		background: #fff;
+		height: 100px;
+		margin: 5px 70px;
+		
+	}
+
+
+	.foot_left a, .foot_mid1 a, .foot_mid2 a, .foot_right a{
+		text-decoration: none;
+		text-align: center;
+		display: flex;
+		cursor: pointer;
+		margin-bottom: 2px;
+
+	}
+</style>
+<body>
+	<div class="main_container">
+		<nav>
+			<div class="nav_left">
+				<div class="logo">
+					<i class="fas fa-globe fa-5x"></i>
+				</div>
+				<h1 class="logo_title"> it4 allbusiness <br><span></span></h1>
+				<div class="navbar">
+					<a href=""> Home </a>
+					<a href=""> About </a>
+					<a href=""> Contact </a>
+				</div>
+			</div>
+			<div class="nav_right">
+				<div class="search">
+					<i class="fas fa-search fa-2x"></i>
+					<input class="text" type="text" placeholder="What Are You Looking For?"></input>
+				</div>
+				<div class="sign_info">
+					<a href="signup"> SignUp</a>
+					{% if request.user.is_authenticated %}
+			          	<a class="nav-link" href="/logout" tabindex="-1"> Logout</a>
+			        {% else %}
+			        	<a class="nav-link" href="/login" tabindex="-1"> Login </a>
+			        {% endif %}
+				</div>
+					<div class="profile">
+					<img src="{{admin.profile_pic.url}}">
+					<h2 class="name">  {{request.user.first_name}}</h2>
+				</div>
+			</div>
+		</nav>
+		{% block content %}
+
+		{% endblock content %}
+
+		<br>
+		<hr>
+		<footer>
+			<div class="footer">
+				<div class="foot_left">
+					<h1 class="foot_title"> Careers </h1>
+					<a href="">Job Search </a>
+					<a href="">Job Apply </a>
+				</div>
+				<div class="foot_mid1">
+					<h1 class="foot_title"> Business </h1>
+					<a href=""> Org Farm </a>
+					<a href=""> Employee Management </a>
+					<a href=""> Org Hospital</a>
+					
+				</div>
+				<div class="foot_mid2">
+					<h1 class="foot_title"> Support </h1>
+					<a href=""> Technical Error </a>
+					<a href=""> Customer Service </a>
+					<a href=""> Return Exchange </a>
+					
+				</div>
+				<div class="foot_right">
+					<h1 class="foot_title"> Blog </h1>
+					<a href=""> Latest Posts </a>
+					<a href=""> Search Posts </a>
+
+				</div>
+			</div>
+		</footer>
+		
+</body>
+</html>

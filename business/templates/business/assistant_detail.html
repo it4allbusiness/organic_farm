@@ -1,0 +1,43 @@
+{% extends 'business/admin_base.html' %}
+
+{% block content %}
+<style type="text/css">
+	.employee{
+		margin: 5px 80px;
+		align-items: center;
+	}
+
+	.title{
+		font-size: 22px;
+		font-weight: bold;
+		text-transform: uppercase;
+		letter-spacing: 1px;
+		margin: 10px 5px;
+		color: black;
+	}
+	.pic_resume{
+		display: flex;
+		text-align: center;
+		padding: 5px 5px;
+	}
+	.photo{
+		margin-right: 5px;
+	}
+
+</style>
+<div class="employee">
+	<h1 class="title"> Assistant Detail </h1>
+	<div class="pic_resume">
+		<div class="photo">
+			<img src="{{ assistant.profile_pic.url }}"alt="Profile Pic" height="300px" width="500px"/>
+		</div>
+		<div>
+			<h3>{{assistant.overview}}</h3>
+			<h2> Salary: ${{assistant.salary}}</h2>
+			<!-- <embed src="{{employee.resume.url}}" width="750" height="300" 
+ type="application/pdf"> -->
+		</div>
+	</div>	
+</div>
+	
+{% endblock %}

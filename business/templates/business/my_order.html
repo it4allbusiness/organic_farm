@@ -1,0 +1,219 @@
+{% extends 'business/customer_base.html' %}
+
+{% block content %}
+{% load widget_tweaks %}
+<style type="text/css">
+	.order_detail{
+		display: flex;
+		align-items: center;
+		margin: 5px 10px;
+		border: 1px solid green;
+	}
+	.order_detail img{
+		width: 150px;
+		height: 100px;
+		margin: 5px 5px;
+	}
+	.title{
+		margin-right: 10px;
+	}
+	.price{
+		margin-right: 10px;
+	}
+	p{
+		margin: 0px 5px;
+	}
+
+
+	caption{
+		font-size: 22px;
+		font-weight: bold;
+		text-transform: uppercase;
+		letter-spacing: 1px;
+		margin: 5px 5px;
+		color: green;
+	}
+	tr{
+		margin: 5px 5px;
+		border: 1px solid;
+	}
+	table, th, td{
+		margin: 0px 10px;
+		border: 1px solid green;
+		border-collapse: collapse;
+		font-size: 20px;
+		font-weight: bold;
+	}
+
+	th, td{
+		padding: 10px;
+	}
+
+	tr:nth-child(even){
+		background-color: #ccc;
+	}
+	tr:nth-child(odd){
+		background-color: #eee;
+	}
+	.sale{
+		color: red;
+		width: 100px;
+	}
+	.order{
+		margin: 5px 90px;
+	}
+	.check{
+		text-align: center;
+		color: green;
+		font-size: 22px;
+		font-weight: bold;
+		text-transform: uppercase;
+		width: 280px;
+	}
+
+    .title h1{
+    	font-size: 20px;
+    	font-weight: bold;
+    	text-transform: uppercase;
+    	letter-spacing: 1px;
+    	color: darkblue;
+    	line-height: 30px;
+    	border-bottom: 1px solid black;
+    	margin-bottom: 10px;
+    }
+    .subtitle{
+    	font-size: 18px;
+    	font-weight: 500;
+    	text-transform: uppercase;
+    	letter-spacing: 1px;
+    	color: black;
+    	line-height: 30px;
+    	border-bottom: 1px dotted black;
+    	margin-bottom: 10px;
+    }
+    .content{
+    	margin: 5px 10px;
+    	display: flex;
+    	align-items: center;
+    }
+    .content .content_left{
+  	width: 45%;
+  	margin-right: 20px;
+
+    }
+    .content .content_right{
+    
+    	width: 45%;
+
+    }
+    
+   .address{
+   	padding: 5px 10px;
+   	background: #fff;
+   	text-align: center;
+   	margin: 10px 70px;
+   }
+
+    .address h2{
+   	margin-bottom: 5px;
+   	color: dark;
+   	text-align: center;
+   }
+    .address h3{
+   	margin-bottom: 5px;
+   	color: black;
+   	text-align: center;
+   }
+    button{
+    	width: 120px;
+    	height: 50px;
+    	color: green;
+    	cursor: pointer;
+    	font-size: 22px;
+    	font-weight: bold;
+    	text-transform: uppercase;
+    	margin: 5px 5px;
+    }
+    .account{
+    	margin: 5px 5px;
+    	width: 100%;
+    	height: 70px;
+
+    }
+    .account p{
+    	font-size: 18px;
+    	font-weight: 500;
+    	color: black;
+    	text-align: center;
+    	margin-bottom: 5px;
+    }
+    .account a{
+
+    	text-decoration: none;
+    	color: blue;
+    	text-align: center;
+    	cursor: pointer;
+    }
+
+  .each_content .form-control{
+      margin-left: 10px;
+      text-align: center;
+    }
+
+</style>
+	
+	<div class="check_order">
+	    	<div class="title">
+	    		<h1> My Address </h1>
+	    	</div>
+	    	<div class="content">
+	    		<div class="content_left">
+	    			<h1 class="subtitle"> My Order Address </h1>
+	    			<div class="address">
+	    				<h2>Email: {{address.email}}</h2>
+	    				<h3>Phone: {{address.phone}}</h3>
+	    				<h2>Street: {{address.street_name}}</h2>
+	    				<h3>Apartment: {{address.apartment_num}}</h3>
+	    				<h2>Postal Code: {{address.postal_code}}</h2>
+	    				<h3>Country: {{address.country}}</h3>
+	    			</div>
+		    		
+	    		</div>
+    		<div class="content_right">
+	    		<table>
+		
+					<caption> My Orders </caption>
+					<tr>
+						<th> Pic </th>
+						<th> Name </th>
+						<th> Qty </th>
+						<th> Reg Price </th>
+						<th> Sale Price </th>
+						<th> Total Price </th>
+					</tr>
+					{% for ord in order.products.all %}
+
+					<tr>
+						<td><img src="{{ ord.product.pic.url }}" width="50px"; height="50px"> </td>
+						<td>{{ ord.product.name}}</td>
+						<td>{{ ord.qty}}</td>
+						<td>${{ ord.product.reg_price}}/lb</td>
+						{% if ord.product.sale_price %}
+						<td class="sale">$ {{ ord.product.sale_price}} /lb</td>
+						{% else %}
+						<td class="sale">$ {{ ord.product.reg_price}} /lb</td>
+						{% endif %}
+						<td>$ {{ ord.total_price }}</td>
+					</tr>
+
+					{% endfor %}
+					<tr> <td colspan="5"><b>Order Total: </b></td>
+			           <td><b>$ {{ order.order_total}}</b></td>
+			           <td><b>{{ order.status}}</b></td>
+			        </tr>
+				</table>
+    		</div>
+    	</div>
+</div>
+
+{% endblock content %}

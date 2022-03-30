@@ -1,0 +1,85 @@
+{% extends 'business/assistant_base.html' %}
+
+{% block content %}
+<style type="text/css">
+	.product{
+		margin: 5px 80px;
+		align-items: center;
+		
+	}
+
+	caption{
+		font-size: 22px;
+		font-weight: bold;
+		text-transform: uppercase;
+		letter-spacing: 1px;
+		margin: 5px 5px;
+		color: blue;
+	}
+	tr{
+		margin: 5px 5px;
+		border: 1px solid;
+	}
+	table, th, td{
+		margin: 0px 10px;
+		border: 1px solid green;
+		border-collapse: collapse;
+		font-size: 20px;
+		font-weight: bold;
+	}
+
+	th, td{
+		padding: 10px;
+	}
+
+	tr:nth-child(even){
+		background-color: #ccc;
+	}
+	tr:nth-child(odd){
+		background-color: #eee;
+	}
+	.sale{
+		color: red;
+	}
+	.del{
+		color: red;
+	}
+	.update{
+		color: green;
+	}
+</style>
+
+<div class="product">
+	<a href="assistant-add-product"> Add New Product </a>
+
+	<table>
+		<caption> Our products </caption>
+		<tr>
+			<th> Picture </th>
+			<th> Name </th>
+			<th> Category </th>
+			<th> Company </th>
+			<th> Stock </th>
+			<th> Reg Price </th>
+			<th> Sale Price </th>
+		</tr>
+		{% for prod in products %}
+		
+		<tr>
+			<td><img src="{{ prod.pic.url }}" width="150px"; height="100px"> </td>
+			<td>{{ prod.name}}</td>
+			<td>{{ prod.category}}</td>
+			<td>{{ prod.company}}</td>
+			<td>{{ prod.stock }}</td>
+			<td>$ {{ prod.reg_price }}/lb</td>
+			<td >$ {{ prod.sale_price}}/lb</td>
+			<td ><a href="{% url 'assistant-update-product' prod.id %}"> Update </a></td>
+			<td ><a href="{% url 'assistant-delete-product' prod.id %}"> Delete </a></td>
+		</tr>
+		{% endfor %}
+	</table>
+	
+</div>
+
+
+{% endblock %}

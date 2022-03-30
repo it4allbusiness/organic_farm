@@ -1,0 +1,229 @@
+{% extends 'business/general_base.html' %}
+
+{% block content %}
+{% load widget_tweaks %}
+<style type="text/css">
+	.order_detail{
+		display: flex;
+		align-items: center;
+		margin: 5px 10px;
+		border: 1px solid green;
+	}
+	.order_detail img{
+		width: 150px;
+		height: 100px;
+		margin: 5px 5px;
+	}
+	.title{
+		margin-right: 10px;
+	}
+	.price{
+		margin-right: 10px;
+	}
+	p{
+		margin: 0px 5px;
+	}
+
+
+	caption{
+		font-size: 22px;
+		font-weight: bold;
+		text-transform: uppercase;
+		letter-spacing: 1px;
+		margin: 5px 5px;
+		color: green;
+	}
+	tr{
+		margin: 5px 5px;
+		border: 1px solid;
+	}
+	table, th, td{
+		margin: 0px 10px;
+		border: 1px solid green;
+		border-collapse: collapse;
+		font-size: 20px;
+		font-weight: bold;
+	}
+
+	th, td{
+		padding: 10px;
+	}
+
+	tr:nth-child(even){
+		background-color: #ccc;
+	}
+	tr:nth-child(odd){
+		background-color: #eee;
+	}
+	.sale{
+		color: red;
+		width: 100px;
+	}
+	.order{
+		margin: 5px 90px;
+	}
+	.check{
+		text-align: center;
+		color: green;
+		font-size: 22px;
+		font-weight: bold;
+		text-transform: uppercase;
+		width: 280px;
+	}
+	form{
+    	background: #ccc;
+    	margin: 5px 95px;
+    	width: 87%;
+    	height: 600px;
+    }
+    .title h1{
+    	font-size: 20px;
+    	font-weight: bold;
+    	text-transform: uppercase;
+    	letter-spacing: 1px;
+    	color: darkblue;
+    	line-height: 30px;
+    	border-bottom: 1px solid black;
+    	margin-bottom: 10px;
+    }
+    .content{
+    	margin: 5px 10px;
+    	display: flex;
+    	align-items: center;
+    }
+    .content .content_left{
+  	width: 45%;
+  	margin-right: 20px;
+
+    }
+    .content .content_right{
+    
+    	width: 45%;
+
+    }
+    
+    .form-control{
+    	width: 100%;
+    	height: 40px;
+    	margin: 10px 10px;
+    	background: #fff;
+    	border-radius: 1.5em;
+    	font-size: 20px;
+    	font-weight: bolder;
+    	color: blue;
+
+    }
+    button{
+    	width: 120px;
+    	height: 50px;
+    	color: green;
+    	cursor: pointer;
+    	font-size: 22px;
+    	font-weight: bold;
+    	text-transform: uppercase;
+    	margin: 5px 5px;
+    }
+    .account{
+    	margin: 5px 5px;
+    	width: 100%;
+    	height: 70px;
+
+    }
+    .account p{
+    	font-size: 18px;
+    	font-weight: 500;
+    	color: black;
+    	text-align: center;
+    	margin-bottom: 5px;
+    }
+    .account a{
+
+    	text-decoration: none;
+    	color: blue;
+    	text-align: center;
+    	cursor: pointer;
+    }
+
+  .each_content .form-control{
+      margin-left: 10px;
+      text-align: center;
+    }
+
+</style>
+	
+	<div class="check_order">
+
+		<form method="post" enctype="multipart/form-data">
+	    {% csrf_token %}
+	    <div class="detail_form">
+	    	<div class="title">
+	    		<h1> CheckOut Form </h1>
+	    	</div>
+	    	<div class="content">
+	    		<div class="content_left">
+		    		<div class="each_content">
+		    			{% render_field form.email class="form-control" placeholder="Email" %}	
+		    		</div>
+		    		<div class="each_content">
+		    			{% render_field form.phone class="form-control" placeholder="Phone" %}	
+		    		</div>
+		    		<div class="each_content">
+		    			{% render_field form.street_name class="form-control" placeholder="Street Name:" %}	
+		    		</div>
+		    		<div class="each_content">
+		    			{% render_field form.apartment_num class="form-control" placeholder="Apartment Num:" %}	
+		    		</div>
+		    		<div class="each_content">
+		    			{% render_field form.postal_code class="form-control" placeholder="Postal Code " %}	
+		    		</div>
+		    		<div class="each_content">
+		    			{% render_field form.city class="form-control" placeholder="City " %}	
+		    		</div>
+		    		<div class="each_content">
+		    			<label> Choose Country </label>
+		    			{% render_field form.country class="form-control" placeholder="Country " %}	
+		    		</div>
+	    		</div>
+    		<div class="content_right">
+	    		<table>
+		
+					<caption> My Orders </caption>
+					<tr>
+						<th> Pic </th>
+						<th> Name </th>
+						<th> Qty </th>
+						<th> Reg Price </th>
+						<th> Sale Price </th>
+						<th> Total Price </th>
+					</tr>
+					{% for ord in order.products.all %}
+
+					<tr>
+						<td><img src="{{ ord.product.pic.url }}" width="50px"; height="50px"> </td>
+						<td>{{ ord.product.name}}</td>
+						<td>{{ ord.qty}}</td>
+						<td>${{ ord.product.reg_price}}/lb</td>
+						{% if ord.product.sale_price %}
+						<td class="sale">$ {{ ord.product.sale_price}} /lb</td>
+						{% else %}
+						<td class="sale">$ {{ ord.product.reg_price}} /lb</td>
+						{% endif %}
+						<td>$ {{ ord.total_price }}</td>
+					</tr>
+
+					{% endfor %}
+					<tr> <td colspan="5"><b>Order Total: </b></td>
+			           <td><b>$ {{ order.order_total}}</b></td>
+			           <tr>
+			         		<td colspan="7"><a href="stripe-payment" ><button class="check"> Submit&Pay </button></a></td>
+			            </tr>
+			        </tr>
+				</table>
+    		</div>
+    	</div>
+    </div>
+  </form>  
+
+</div>
+
+{% endblock content %}

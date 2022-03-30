@@ -1,0 +1,281 @@
+{% extends 'business/admin_base.html' %}
+
+{% block content %}
+<style type="text/css">
+
+	.signup{
+		display: flex;
+		text-align: center;
+		align-items: center;
+		background: #eee;
+		margin: 10px 80px;
+		height: 100px;
+	}
+	.employee, .customer, .vendor{
+		text-transform: uppercase;
+		letter-spacing: 1px;
+		margin: 10px 50px;
+		color: white;
+		text-decoration: none;
+		font-size: 20px;
+		font-weight: 600;
+	}
+
+	caption{
+		font-size: 22px;
+		font-weight: bold;
+		text-transform: uppercase;
+		letter-spacing: 1px;
+		margin: 5px 5px;
+		color: black;
+	}
+	tr{
+		margin: 5px 5px;
+		border: 1px solid;
+	}
+	table, th, td{
+		margin: 0px 10px;
+		border: 1px solid green;
+		border-collapse: collapse;
+		font-size: 20px;
+		font-weight: bold;
+	}
+
+	th, td{
+		padding: 10px;
+		color: green;
+	}
+
+	tr:nth-child(even){
+		background-color: black;
+	}
+	tr:nth-child(odd){
+		background-color: #eee;
+	}
+	.sale{
+		color: red;
+	}
+	.del{
+		color: red;
+	}
+
+	.order_detail{
+		display: flex;
+		align-items: center;
+		margin: 5px 10px;
+		border: 1px solid green;
+	}
+	.order_detail img{
+		width: 150px;
+		height: 100px;
+		margin: 5px 5px;
+	}
+	.title{
+		text-transform: uppercase;
+		font-size: 22px;
+		font-weight: 600;
+		border-bottom: 1px dotted black;
+	}
+	.subtitle{
+		text-transform: uppercase;
+		font-size: 22px;
+		font-weight: 500;
+		border-bottom: 1px dotted black;
+		color: blue;
+	}
+	.price{
+		margin-right: 10px;
+	}
+	p{
+		margin: 0px 5px;
+	}
+
+
+	.sale{
+		color: red;
+	}
+	.order{
+		margin: 5px 90px;
+	}
+	.check{
+		text-align: right;
+		color: green;
+		font-size: 22px;
+		font-weight: bold;
+		text-transform: uppercase;
+	}
+	.buyer_info{
+		display: flex;
+		align-items: center;
+		margin-right: 150px;
+		margin-left: 10px;
+		background: #ddd;
+	}
+	.user_info{
+		padding: 10px 10px;
+		background: #fff;
+		margin:5px 10px ;
+		text-align: center;
+	}
+	.address_info{
+		padding: 10px 10px;
+		background: #fff;
+		margin:5px 40px ;
+		text-align: center;
+	}
+	.user_info, .address_info h1{
+		margin-bottom: 2px;
+		color: dark;
+		text-transform: uppercase;
+	}
+	.user_info, .address_info h2{
+		margin-bottom: 2px;
+	}
+
+	span{
+		margin-left: 30px;
+		color: green;
+	}
+	.hr{
+		margin: 5px 10px;
+		border: 1px solid green;
+	}
+	.tab_stat{
+		display: flex;
+		align-items: center;
+		margin-right: 150px;
+		margin-left: 10px;
+		background: #fff;
+
+	}
+
+	.status{
+		margin: 0px 10px;
+		width: 150px;
+
+	}
+	.see button{
+		width: 150px;
+		font-size: 22px;
+		font-weight: bold;
+		color: green;
+		margin: 5px 10px;
+		text-transform: uppercase;
+	}
+	.update a button{
+		text-decoration: none;
+		color: blue;
+		margin: 10px 10px;
+		font-size: 20px;
+		font-weight: bold;
+		text-transform: uppercase;
+		width: 150px;
+	}
+	.emp_asst{
+		display: grid;
+		grid-template-rows: 1fr 1fr;
+		text-align: center;
+		margin: 5px 5px;
+		background: #fff;
+	}
+
+</style>
+
+	<div class="signup">
+		<div class="employee">
+			<a href="admin-assistant"> Assistant </a>
+		</div>
+		<div class="customer">
+			<a href="admin-category"> Category </a>
+		</div>
+		<div class="vendor">
+			<a href="admin-product"> Product </a>
+		</div>
+		<div class="customer">
+			<a href=""> Customer </a>
+		</div>
+		<div class="vendor">
+			<a href=""> Vendor </a>
+		</div>
+		<div class="vendor">
+			<a href="assistant-view-order"> Order </a>
+		</div>
+
+	</div>
+<hr>
+	<div class="employee">
+		<div class="tab_stat">
+			<table>
+				<caption> Unapproved Employee </caption>
+				<tr>
+					<th> Picture </th>
+					<th> Name </th>
+					<th> Phone </th>
+					<th> Email </th>
+					<th> address </th>
+					<th> Position </th>
+					<th> Status </th>
+				</tr>
+				{% for emp in femployee %}
+				
+				<tr>
+					<td><img src="{{ emp.profile_pic.url }}" width="150px"; height="100px"> </td>
+					<td>{{ emp.get_name}}</td>
+					<td>{{ emp.phone}}</td>
+					<td>{{ emp.email}}</td>
+					<td>{{ emp.address }}</td>
+					
+					<td >{{ emp.position}}</td>
+					<td >{{ emp.status }}</td>
+				</tr>
+				<tr>
+		           <td><b>{{emp.overview}}</b></td>
+		        </tr>
+			</table>
+			<div class="status">
+				<h1 class="subtitle"> Status </h1>
+				<div class="see">
+					<a href="{% url 'admin-employee-detail' emp.id %}"> <button> Detail </button> </a>
+				</div>
+				<div class="update">
+					<a href="{% url 'admin-approve-employee' emp.id %}"><button> Approve </button></a>
+				</div>
+			</div>
+			{% endfor %}
+		</div>
+	</div>
+
+<hr>
+
+<div class="employee">
+		<div class="tab_stat">
+			<table>
+				<caption> Approved Employee </caption>
+				<tr>
+					<th> Picture </th>
+					<th> Name </th>
+					<th> Phone </th>
+					<th> Email </th>
+					<th> address </th>
+					<th> Position </th>
+					<th> Status </th>
+				</tr>
+				{% for emp in temployee %}
+				
+				<tr>
+					<td><img src="{{ emp.profile_pic.url }}" width="150px"; height="100px"> </td>
+					<td>{{ emp.get_name}}</td>
+					<td>{{ emp.phone}}</td>
+					<td>{{ emp.email}}</td>
+					<td>{{ emp.address }}</td>
+					
+					<td >{{ emp.position}}</td>
+					<td >{{ emp.status }}</td>
+					<td><a href="{% url 'admin-employee-detail' emp.id %}"> <button> Detail </button> </a></td>
+				</tr>
+				{% endfor %}
+			</table>
+		</div>
+	</div>
+
+{% endblock %}

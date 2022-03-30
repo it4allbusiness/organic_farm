@@ -1,0 +1,312 @@
+{% extends 'business/assistant_base.html' %}
+
+{% block content %}
+<style type="text/css">
+
+	.signup{
+		display: flex;
+		text-align: center;
+		align-items: center;
+		background: #eee;
+		margin: 10px 80px;
+		height: 100px;
+	}
+	.employee, .customer, .vendor{
+		text-transform: uppercase;
+		letter-spacing: 1px;
+		margin: 10px 50px;
+		color: white;
+		text-decoration: none;
+		font-size: 20px;
+		font-weight: 600;
+	}
+
+
+	caption{
+		font-size: 22px;
+		font-weight: bold;
+		text-transform: uppercase;
+		letter-spacing: 1px;
+		margin: 5px 5px;
+		color: black;
+	}
+	tr{
+		margin: 5px 5px;
+		border: 1px solid;
+	}
+	table, th, td{
+		margin: 0px 10px;
+		border: 1px solid green;
+		border-collapse: collapse;
+		font-size: 20px;
+		font-weight: bold;
+	}
+
+	th, td{
+		padding: 10px;
+		color: green;
+	}
+
+	tr:nth-child(even){
+		background-color: black;
+	}
+	tr:nth-child(odd){
+		background-color: #eee;
+	}
+	.sale{
+		color: red;
+	}
+	.del{
+		color: red;
+	}
+
+	.order_detail{
+		display: flex;
+		align-items: center;
+		margin: 5px 10px;
+		border: 1px solid green;
+	}
+	.order_detail img{
+		width: 150px;
+		height: 100px;
+		margin: 5px 5px;
+	}
+	.title{
+		text-transform: uppercase;
+		font-size: 22px;
+		font-weight: 600;
+		border-bottom: 1px dotted black;
+	}
+	.subtitle{
+		text-transform: uppercase;
+		font-size: 22px;
+		font-weight: 500;
+		border-bottom: 1px dotted black;
+		color: blue;
+	}
+	.price{
+		margin-right: 10px;
+	}
+	p{
+		margin: 0px 5px;
+	}
+
+
+	.sale{
+		color: red;
+	}
+	.order{
+		margin: 5px 90px;
+	}
+	.check{
+		text-align: right;
+		color: green;
+		font-size: 22px;
+		font-weight: bold;
+		text-transform: uppercase;
+	}
+	.buyer_info{
+		display: flex;
+		align-items: center;
+		margin-right: 150px;
+		margin-left: 10px;
+		background: #ddd;
+	}
+	.user_info{
+		padding: 10px 10px;
+		background: #fff;
+		margin:5px 10px ;
+		text-align: center;
+	}
+	.address_info{
+		padding: 10px 10px;
+		background: #fff;
+		margin:5px 40px ;
+		text-align: center;
+	}
+	.user_info, .address_info h1{
+		margin-bottom: 2px;
+		color: dark;
+		text-transform: uppercase;
+	}
+	.user_info, .address_info h2{
+		margin-bottom: 2px;
+	}
+
+	span{
+		margin-left: 30px;
+		color: green;
+	}
+	.hr{
+		margin: 5px 10px;
+		border: 1px solid green;
+	}
+	.tab_stat{
+		display: flex;
+		align-items: center;
+		margin-right: 150px;
+		margin-left: 10px;
+		background: #fff;
+
+	}
+
+	.status{
+		margin: 0px 10px;
+		width: 150px;
+
+	}
+	.see button{
+		width: 150px;
+		font-size: 22px;
+		font-weight: bold;
+		color: green;
+		margin: 5px 10px;
+		text-transform: uppercase;
+	}
+	.update a button{
+		text-decoration: none;
+		color: blue;
+		margin: 10px 10px;
+		font-size: 20px;
+		font-weight: bold;
+		text-transform: uppercase;
+		width: 150px;
+	}
+
+</style>
+
+	<div class="signup">
+		<div class="employee">
+			<a href="assistant-employee"> Employee </a>
+		</div>
+		<div class="customer">
+			<a href="assistant-category"> Category </a>
+		</div>
+		<div class="vendor">
+			<a href="assistant-product"> Product </a>
+		</div>
+		<div class="customer">
+			<a href=""> Customer </a>
+		</div>
+		<div class="vendor">
+			<a href=""> Vendor </a>
+		</div>
+		<div class="vendor">
+			<a href="assistant-view-order"> Order </a>
+		</div>
+
+	</div>
+
+{% if femployee %}
+<div class="employee">
+	<div class="tab_stat">
+		<table>
+			<caption> Unapproved Employees </caption>
+			<tr>
+				<th> Picture </th>
+				<th> Name </th>
+				<th> Phone </th>
+				<th> Email </th>
+				<th> address </th>
+				<th> Position </th>
+				<th> Status </th>
+			</tr>
+			{% for emp in femployee %}
+			
+			<tr>
+				<td><img src="{{ emp.profile_pic.url }}" width="150px"; height="100px"> </td>
+				<td>{{ emp.get_name}}</td>
+				<td>{{ emp.phone}}</td>
+				<td>{{ emp.email}}</td>
+				<td>{{ emp.address }}</td>
+				
+				<td >{{ emp.position}}</td>
+				<td >{{ emp.status }}</td>
+			</tr>
+			<tr>
+	           <td><b>{{emp.overview}}</b></td>
+	        </tr>
+		</table>
+		<div class="status">
+			<h1 class="subtitle"> Status </h1>
+			<div class="see">
+				<a href="{% url 'assistant-employee-detail' emp.id %}"> <button> Detail </button> </a>
+			</div>
+			<div class="update">
+				<a href="{% url 'assistant-approve-employee' emp.id %}"><button> Approve </button></a>
+			</div>
+		</div>
+		{% endfor %}
+	</div>
+</div>
+<hr>
+{% else %}
+<div class="order">
+	<h1 class="title"> Latest Orders </h1>
+	{% for order in orders %}
+		<caption> {{forloop.counter}} </caption>
+
+		{% for address in order.get_address %}
+		<div class="buyer_info">
+			<div class="user_info">
+				<h1>Name: {{order.buyer.get_name}}</h1>
+				<h2>Email: {{address.email}}</h2>
+				<h1>Phone: {{address.phone}}</h1>
+			</div>
+			<div class="address_info">
+				<h1>Strret: {{address.street_name}} <span> Apt: {{address.apartment_num}}</span></h1>
+				<h1>Postal Code: {{address.postal_code}}</h1>
+				<h2>Country: {{address.country}}</h2>
+			</div>
+		</div>
+		{% endfor %}
+		<div class="tab_stat">
+			<table>
+				<tr>
+					<th> Pic </th>
+					<th> Name </th>
+					<th> Category </th>
+					<th> Qty </th>
+					<th> Reg Price </th>
+					<th> Sale Price </th>
+					<th> Company </th>
+					<th> Total Price </th>
+				</tr>
+				{% for ord in order.products.all %}
+
+				<tr>
+					<td><img src="{{ ord.product.pic.url }}" width="150px"; height="100px"> </td>
+					<td>{{ ord.product.name}}</td>
+					<td>{{ ord.product.category}}</td>
+					<td>{{ ord.qty}}</td>
+					<td>$ {{ ord.product.reg_price}} /lb</td>
+					{% if ord.product.sale_price %}
+					<td class="sale">$ {{ ord.product.sale_price}} /lb</td>
+					{% else %}
+					<td class="sale">$ {{ ord.product.reg_price}} /lb</td>
+					{% endif %} 
+					<td>{{ ord.product.company }}</td>
+					<td>$ {{ ord.total_price }}</td>
+				</tr>
+
+				{% endfor %}
+				<tr> <td colspan="7"><b>Order Total: </b></td>
+		           <td><b>$ {{ order.order_total}}</b></td>
+		        </tr>
+			</table>
+			<div class="status">
+				<h1 class="title"> Status </h1>
+				<div class="see">
+					<button>{{ order.status}}</button>
+				</div>
+				<div class="update">
+					<a href="{% url 'assistant-update-order-status' order.id %}"><button>Update Status  </button></a>
+				</div>
+			</div>
+		</div>
+		<hr class="hr">
+	{% endfor %}
+	
+</div>
+{% endif %}
+{% endblock %}

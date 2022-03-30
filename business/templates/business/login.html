@@ -1,0 +1,137 @@
+{% extends 'business/general_base.html' %}
+<!DOCTYPE html>
+
+{% load widget_tweaks %}
+{% block content %}
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title> Website4 Allbusiness</title>
+  <style type="text/css">
+    *{
+    	margin: 0;
+    	padding: 0;
+    	font-family: 'Roboto',sans-serif;
+    }
+    body{
+    	width: 100%;
+    	background: lightblue;
+    	margin: 10px 10px;
+    	text-align: center;
+    }
+    form{
+    	background: #ccc;
+    	margin: 5px 95px;
+    	width: 100%;
+    	height: 250px;
+    }
+    .title h1{
+    	font-size: 20px;
+    	font-weight: bold;
+    	text-transform: uppercase;
+    	letter-spacing: 1px;
+    	color: darkblue;
+    	line-height: 30px;
+    	border-bottom: 1px solid black;
+    	margin-bottom: 10px;
+    }
+    .content{
+    	margin: 5px 10px;
+    	display: flex;
+    	align-items: center;
+    }
+    .content .content_left{
+  	width: 45%;
+  	margin-right: 20px;
+
+    }
+    .content .content_right{
+    
+    	width: 45%;
+
+    }
+    
+    .form-control{
+    	width: 100%;
+    	height: 40px;
+    	margin: 10px 10px;
+    	background: #fff;
+    	border-radius: 1.5em;
+    	font-size: 20px;
+    	font-weight: bolder;
+    	color: blue;
+
+    }
+    .each_content .form-control{
+      margin-left: 10px;
+      text-align: center;
+    }
+    button{
+    	width: 120px;
+    	height: 50px;
+    	color: green;
+    	cursor: pointer;
+    	font-size: 22px;
+    	font-weight: bold;
+    	text-transform: uppercase;
+    	margin: 5px 5px;
+    }
+    .account{
+    	margin: 5px 5px;
+    	width: 100%;
+    	height: 70px;
+
+    }
+    .account p{
+    	font-size: 18px;
+    	font-weight: 500;
+    	color: black;
+    	text-align: center;
+    	margin-bottom: 5px;
+    }
+    .account a{
+
+    	text-decoration: none;
+    	color: blue;
+    	text-align: center;
+    	cursor: pointer;
+    }
+
+  </style>
+
+</head>
+
+
+<body>
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="detail_form">
+    	<div class="title">
+    		<h1> Login Page </h1>
+    	</div>
+    	<div class="content">
+    		<div class="content_left">
+	    		<div class="each_content">
+            {% render_field form.username class="form-control" placeholder="User Name" %}  
+          </div>
+    		</div>
+    		<div class="content_right">
+	    		<div class="each_content">
+	    			{% render_field form.password class="form-control" placeholder="Password" %}	
+	    		</div>
+    		</div>
+    		
+    	</div>
+    	<button type="submit">Login</button>
+        <div class="account"><p>Not Register?</p> <a href=""> Register Here</a></div>
+    </div>
+
+  </form>
+
+  
+</body>
+
+</html>
+{% endblock content %}

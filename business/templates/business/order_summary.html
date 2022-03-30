@@ -1,0 +1,117 @@
+{% extends 'business/general_base.html' %}
+
+{% block content %}
+
+<style type="text/css">
+	.order_detail{
+		display: flex;
+		align-items: center;
+		margin: 5px 10px;
+		border: 1px solid green;
+	}
+	.order_detail img{
+		width: 150px;
+		height: 100px;
+		margin: 5px 5px;
+	}
+	.title{
+		margin-right: 10px;
+	}
+	.price{
+		margin-right: 10px;
+	}
+	p{
+		margin: 0px 5px;
+	}
+
+
+	caption{
+		font-size: 22px;
+		font-weight: bold;
+		text-transform: uppercase;
+		letter-spacing: 1px;
+		margin: 5px 5px;
+		color: green;
+	}
+	tr{
+		margin: 5px 5px;
+		border: 1px solid;
+	}
+	table, th, td{
+		margin: 0px 10px;
+		border: 1px solid green;
+		border-collapse: collapse;
+		font-size: 20px;
+		font-weight: bold;
+	}
+
+	th, td{
+		padding: 10px;
+	}
+
+	tr:nth-child(even){
+		background-color: #ccc;
+	}
+	tr:nth-child(odd){
+		background-color: #eee;
+	}
+	.sale{
+		color: red;
+	}
+	.order{
+		margin: 5px 90px;
+	}
+	.check{
+		text-align: right;
+		color: green;
+		font-size: 22px;
+		font-weight: bold;
+		text-transform: uppercase;
+	}
+</style>
+
+	<h1> Welcome To {{order.buyer}}</h1>
+	
+		 <a href="{% url 'general-page' %}"> Keep Purchasing</a>
+	<div class="order">
+	<table>
+		<caption> My Orders </caption>
+		<tr>
+			<th> Pic </th>
+			<th> Name </th>
+			<th> Category </th>
+			<th> Qty </th>
+			<th> Reg Price </th>
+			<th> Sale Price </th>
+			<th> Total Price </th>
+		</tr>
+		{% for ord in order.products.all %}
+
+		<tr>
+			<td><img src="{{ ord.product.pic.url }}" width="150px"; height="100px"> </td>
+			<td>{{ ord.product.name}}</td>
+			<td>{{ ord.product.category}}</td>
+			<td>{{ ord.qty}}</td>
+			<td>{{ ord.product.reg_price}}</td>
+			{% if ord.product.sale_price %}
+			<td class="sale">{{ ord.product.sale_price}}</td>
+			{% else %}
+			<td class="sale">{{ ord.product.reg_price}}</td>
+			{% endif %}
+			<td>{{ ord.total_price }}</td>
+		</tr>
+
+		{% endfor %}
+		<tr> <td colspan="6"><b>Order Total: </b></td>
+           <td><b>$ {{ order.order_total}}</b></td>
+           <tr>
+         		<td colspan="7"><a href="order-checkout" ><button class="check"> CheckOut </button></a></td>
+            </tr>
+        </tr>
+	</table>
+	</div>
+
+	
+
+
+{% endblock content %}

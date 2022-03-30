@@ -1,0 +1,120 @@
+{% extends 'business/assistant_base.html' %}
+
+{% block content %}
+<style type="text/css">
+	.employee{
+		margin: 5px 80px;
+		align-items: center;
+		
+	}
+
+	caption{
+		font-size: 22px;
+		font-weight: bold;
+		text-transform: uppercase;
+		letter-spacing: 1px;
+		margin: 5px 5px;
+		color: blue;
+	}
+	tr{
+		margin: 5px 5px;
+		border: 1px solid;
+	}
+	table, th, td{
+		margin: 0px 10px;
+		border: 1px solid green;
+		border-collapse: collapse;
+		font-size: 20px;
+		font-weight: bold;
+	}
+
+	th, td{
+		padding: 10px;
+	}
+
+	tr:nth-child(even){
+		background-color: #ccc;
+	}
+	tr:nth-child(odd){
+		background-color: #eee;
+	}
+	.sale{
+		color: red;
+	}
+	.del{
+		color: red;
+	}
+	.update{
+		color: green;
+	}
+</style>
+<div class="employee">
+	<table>
+		<caption> Unapproved Employees </caption>
+		<tr>
+			<th> Picture </th>
+			<th> Name </th>
+			<th> Phone </th>
+			<th> Email </th>
+			<th> address </th>
+			<th> Position </th>
+			<th> Status </th>
+		</tr>
+		{% for emp in femployee %}
+		
+		<tr>
+			<td><img src="{{ emp.profile_pic.url }}" width="150px"; height="100px"> </td>
+			<td>{{ emp.get_name}}</td>
+			<td>{{ emp.phone}}</td>
+			<td>{{ emp.email}}</td>
+			<td>{{ emp.address }}</td>
+			
+			<td >{{ emp.position}}</td>
+			<td >{{ emp.status }}</td>
+			<td ><a href="{% url 'assistant-employee-detail' emp.id %}"> Detail </a></td>
+			<td ><a href="{% url 'assistant-approve-employee' emp.id %}"> Approve </a></td>
+		</tr>
+		{% endfor %}
+		<tr>
+           <td><b>{{emp.overview}}</b></td>
+        </tr>
+	</table>
+	
+</div>
+<hr>
+<div class="employee">
+	<table>
+		<caption> Approved Employees </caption>
+		<tr>
+			<th> Picture </th>
+			<th> Name </th>
+			<th> Phone </th>
+			<th> Email </th>
+			<th> address </th>
+			<th> Position </th>
+			<th> Status </th>
+		</tr>
+		{% for emp in temployee %}
+		
+		<tr>
+			<td><img src="{{ emp.profile_pic.url }}" width="150px"; height="100px"> </td>
+			<td>{{ emp.get_name}}</td>
+			<td>{{ emp.phone}}</td>
+			<td>{{ emp.email}}</td>
+			<td>{{ emp.address }}</td>
+			
+			<td >{{ emp.position}}</td>
+			<td >{{ emp.status }}</td>
+			<td ><a href="{% url 'assistant-employee-detail' emp.id %}"> Detail </a></td>
+			<td ><a href="{% url 'assistant-update-employee' emp.id %}" class="update"> Update </a></td>
+			<td ><a href="{% url 'assistant-delete-employee' emp.id %}" class="del"> Delete </a></td>
+		</tr>
+		{% endfor %}
+		<tr>
+           <td><b>{{emp.overview}}</b></td>
+        </tr>
+	</table>
+	
+</div>
+	
+{% endblock %}

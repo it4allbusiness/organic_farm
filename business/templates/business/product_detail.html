@@ -1,0 +1,100 @@
+{% extends 'business/general_base.html' %}
+
+{% block content %}
+<style type="text/css">
+.container{
+ 	background: #fff;
+ 	width: 100%;
+ }
+ .all_detail{
+ 	display: grid;
+ 	grid-template-columns: 1fr 1fr;
+ 	margin: 5px 5px;
+ }
+
+.title{
+		font-size: 22px;
+		font-weight: bold;
+		text-transform: uppercase;
+		letter-spacing: 1px;
+		border-bottom: 1px solid blue;
+	}
+	.subtitle{
+		font-size: 20px;
+		font-weight: bold;
+		text-transform: uppercase;
+		letter-spacing: 1px;
+		border-bottom: 1px dotted green;
+		margin: 10px 10px;
+	}
+
+
+ .price{
+	 	margin: 20px 20px;
+	 }
+
+	.price h1{
+		font-size: 20px;
+		font-weight: 600;
+	}
+	.price h1 span{
+		font-size: 20px;
+		font-weight: 600;
+		color: red;
+		margin-left: 10px;
+
+	}
+	.title_img img{
+		width: 500px;
+		height: 400px;
+		cursor: pointer;
+		margin: 5px 10px;
+	}
+	.video{
+		margin: 10px 5px;
+	}
+	.desc p{
+		text-align: left;
+		margin: 2px 5px;
+		color: green;
+	}
+</style>
+
+<div class="container">
+		<div class="all_detail">
+			<div class="title_img">
+				<h1 class="title"> {{product.name}}</h1>
+				<img src="{{ product.pic.url}}">
+			</div>
+			<div class="price_description">
+				<div class="price">
+					{% if product.sale_price %}
+						<h1> Was: ${{product.reg_price}} <span> Now: ${{ product.sale_price}}</span></h1>
+					{% else%}
+						<h1>${{product.reg_price}}</h1>
+					{% endif %}
+				</div>
+				<div class="description">
+					<h1 class="subtitle"> Features </h1>
+					<div class="desc">
+						<p >{{product.description|safe}}</p>
+					</div>
+					
+					
+				</div>
+				<div class="video">
+					{% if product.vfile %}
+					<video name='demo' controls autoplay width='400px' height='250px'>
+						<source src="{{product.vfile.url}}" type="video/mp4"></source>
+					</vihttp://127.0.0.1:8000/media/servicePic/127.0.0.1_8000_-_Google_Chrome_2021-06-30_3_51_58_PM.pngdeo>
+					{% else %}
+					<h1> Sorry, No Video file for this Product </h1>
+					{% endif %}
+				</div>
+
+			</div>
+		</div>
+		
+	</div>	
+
+{% endblock %}

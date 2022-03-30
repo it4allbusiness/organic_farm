@@ -1,0 +1,79 @@
+{% extends 'business/assistant_base.html' %}
+
+{% block content %}
+<style type="text/css">
+
+	.category{
+		margin: 5px 80px;
+		align-items: center;
+		
+	}
+
+	caption{
+		font-size: 22px;
+		font-weight: bold;
+		text-transform: uppercase;
+		letter-spacing: 1px;
+		margin: 5px 5px;
+		color: black;
+	}
+	tr{
+		margin: 5px 5px;
+		border: 1px solid;
+	}
+	table, th, td{
+		margin: 0px 10px;
+		border: 1px solid green;
+		border-collapse: collapse;
+		font-size: 20px;
+		font-weight: bold;
+	}
+
+	th, td{
+		padding: 10px;
+		color: green;
+	}
+
+	tr:nth-child(even){
+		background-color: black;
+	}
+	tr:nth-child(odd){
+		background-color: #eee;
+	}
+	.cat{
+		color: blue;
+		font-size: 22px;
+		font-weight: bold;
+	}
+	.del{
+		color: red;
+	}
+
+</style>
+
+	<h1> Welcome to Assistant Category Page !</h1>
+	
+	<div class="category">
+
+		<div class="cat">
+			<a href="assistant-add-category"> Add New Category </a>
+		</div>
+		<table>
+			<caption> Our Categories </caption>
+			<tr>
+				<th> Name </th>
+				<th colspan="2"> Action </th>
+			</tr>
+			{% for cat in categories %}
+			
+			<tr>
+				<td>{{ cat.category_name}}</td>
+				<td> Update </td>
+				<td ><a href="{% url 'assistant-delete-category' cat.id %}" class="del"> Delete </a></td>
+			</tr>
+			{% endfor %}
+		</table>
+	</div>
+	
+
+{% endblock %}

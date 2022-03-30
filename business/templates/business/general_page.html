@@ -1,0 +1,184 @@
+{% extends 'business/general_base.html' %}
+
+{% block content %}
+<style type="text/css">
+	
+.container{
+		margin: 5px 5%;
+		display: grid;
+		grid-template-columns: 1fr 2fr 1fr;
+		position: relative;
+	}
+	.container .left_sidebar, .right_sidebar{
+		background: #ccc;
+		margin: 0px 5px;
+	}
+	.container .main_content{
+		background: #fff;
+		
+	}
+	.title{
+		font-size: 22px;
+		font-weight: bold;
+		text-transform: uppercase;
+		letter-spacing: 1px;
+		border-bottom: 1px solid blue;
+	}
+	.product{
+		margin: 10px 10px;
+	}
+
+	.product img{
+		width: 300px;
+		height: 250px;
+		margin: 5px 5px;
+		cursor: pointer;
+	}
+	.subtitle{
+		font-size: 18px;
+		font-weight: bold;
+		text-transform: uppercase;
+		letter-spacing: 1px;
+		color: darkblue;
+		border-bottom: 1px dotted; 
+	}
+
+	a{
+		text-decoration: none;
+		cursor: pointer;
+		font-size: 18px;
+		font-weight: 500;
+		color: blue;
+		margin-bottom: 5px;
+	}
+	.all_product{
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		margin: 5px 5px;
+	}
+	.price{
+	 	margin: 5px 5px;
+	 }
+
+	.price h1{
+		font-size: 20px;
+		font-weight: 600;
+	}
+	.price h1 span{
+		font-size: 20px;
+		font-weight: 600;
+		color: red;
+		margin-left: 10px;
+
+	}
+	a button{
+		font-size: 22px;
+		font-weight: bold;
+		margin-right: 5px;
+	}
+	p{
+		font-size: 16px;
+		font-weight: 500;
+		margin: 5px 5px;
+	}
+	.add_btn{
+		color: blue;
+		text-transform: uppercase;
+	}
+	.view_btn{
+		color: green;
+		text-transform: uppercase;
+	}
+	.category{
+		margin: 5px 100px;
+		text-align: left;
+	}
+	.all_category{
+		margin: 5px 2px;
+	}
+
+</style>
+	<div class="container">
+			<div class="left_sidebar">
+				<div class="category">
+					<h1 class="title"> Category </h1>
+						<a href="{% url 'general-page' %}"> All </a>
+						{% for cat in categories %}
+						<div class="all_category">
+							<a href="{% url 'general-page' %}?category={{cat.id}}"> {{cat.category_name}}</a>
+						</div>
+						{% endfor %}
+				</div>
+				
+			</div>
+			<div class="main_content">
+				<div class="content">
+					<h1 class="title"> Services/Products </h1>
+						<div class="all_product">
+							{% for prod in queryset %}
+							<div class="product">
+								<h2 class="subtitle">{{prod.name}}</h2>
+								<img src="{{prod.pic.url}}">
+								<span>Total Stock: {{prod.stock}}</span>
+								<p>{{prod.overview}}</p>
+								<div class="price">
+									{% if prod.sale_price %}
+										<h1> Was: ${{prod.reg_price}} /lb <span> Now: ${{prod.sale_price}} /lb</span></h1>
+									{% else%}
+										<h1>${{prod.reg_price}} /lb</h1>
+									{% endif %}
+								</div>
+								<div class="purchase_view">
+									<a href="{% url 'add-product-to-cart' prod.id %}" ><button class="add_btn"> Add To Cart </button></a>
+									<a href="{% url 'product-detail' prod.id %}" ><button class="view_btn"> view </button></a>
+								</div>
+							</div>
+							
+							{% endfor %}
+						</div>
+				</div>
+				
+			</div>
+			<div class="right_sidebar">
+				<div class="content">
+					<h1 class="title"> My Blogs </h1>
+						
+						<div class="all_blog">
+							{% for blog in blogs %}
+							<div class="product">
+								<h2 class="subtitle">{{blog.blog_name}}</h2>
+								<img src="{{blog.pic.url}}" width="250px, height='250px">
+								<p>{{blog.overview}}</p>
+								
+								<div class="purchase_view">
+									
+								</div>
+							</div>
+							
+							{% endfor %}
+						</div>
+						
+				</div>
+			</div>
+		</div>
+
+		{% if queryset.has_previous %}
+        <a class="btn btn-outline-info mb-4" href="?page=1">First</a>
+        <a class="btn btn-outline-info mb-4" href="?page={{queryset.previous_page_number}}">Previous</a>
+	      {% endif %}
+
+	      {% for num in queryset.paginator.page_range %}
+	        {% if qureyset.number == num %}
+	          <a class="btn btn-info mb-4" href="?page={{ num }}">{{ num }}</a>
+	        {% elif num > queryset.number|add:'-3' and num < queryset.number|add:'3' %}
+	          <a class="btn btn-outline-info mb-4" href="?page={{ num }}">{{ num }}</a>
+	        {% endif %}
+	      {% endfor %}
+
+	      {% if queryset.has_next %}
+	        <a class="btn btn-outline-info mb-4" href="?page={{ queryset.next_page_number }}">Next</a>
+	        <a class="btn btn-outline-info mb-4" href="?page={{ queryset.paginator.num_pages }}">Last</a>
+	      {% endif %}
+
+
+{% endblock %}
